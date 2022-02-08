@@ -15,6 +15,7 @@ const authRoute = require("./routes/auth");
 
 
 
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => (console.log('database connected')))
     .catch((err) => {
@@ -28,6 +29,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.use("/api/users", usertestRoute);
 app.use("/api/auth", authRoute);
+
 
 
 
