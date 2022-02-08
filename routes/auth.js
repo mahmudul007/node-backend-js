@@ -25,32 +25,41 @@ router.post("/register", async (req, res) => {
 
     }
 });
+//login
 router.post("/login", async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username })
         !user && res.status(401).json("wrong username");
+
         const hashpass = CryptoJS.AES.decrypt(
             user.password,
             process.env.PASS_SEC
         );
         const originalPassword = hashpass.toString(CryptoJS.enc.Utf8);
-        originalPassword !== req.body.password &&
+
+        if(originalPassword !== req.body.password){
+
             res.status(401).json("wrong credential");
+        }
+        else{
 
-        const accesToken = jwt.sign({
-            id: user._id,
-            isAdmin: user.isAdmin
+            const accesToken = jwt.sign({
+                id: user._id,
+                isAdmin: user.isAdmin
+    
+            }, process.env.JWT_SEC,
+                { expiresIn: "3d" }
+            );
+    
+    
+    
+            const { password, ...others } = user._doc;
+    
+    
+            res.status(200).json({ ...others, accesToken });
+        }
 
-        }, process.env.JWT_SEC,
-            { expiresIn: "3d" }
-        );
 
-
-
-        const { password, ...others } = user._doc;
-
-
-        res.status(200).json({ ...others, accesToken });
 
     }
     catch (err) {
