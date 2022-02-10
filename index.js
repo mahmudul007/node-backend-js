@@ -12,6 +12,8 @@ app.use(express.json());
 const usertestRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const productRoute = require("./routes/product");
+const cartRoute = require("./routes/cart");
+const orderRoute = require("./routes/order");
 
 
 
@@ -31,6 +33,8 @@ mongoose.connect(process.env.MONGO_URL)
 app.use("/api/users", usertestRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/product", productRoute);
+app.use("/api/cart", cartRoute);
+app.use("/api/order", orderRoute);
 
 
 
