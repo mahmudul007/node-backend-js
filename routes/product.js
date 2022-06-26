@@ -72,14 +72,17 @@ router.put("/:id", verifyTokenAdmin, async (req, res) => {
   }
 });
 //DELETE one product
-router.delete(":/id", verifyTokenAdmin, async (req, res) => {
+//verifyTokenAdmin,verifyTokenAndAdmin
+
+router.delete("/:id", verifyTokenAdmin, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json("product deleted successfully......");
+    res.status(200).json("Product has been deleted...");
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 //find one product
 router.get("/find/:id", async (req, res) => {
   try {
