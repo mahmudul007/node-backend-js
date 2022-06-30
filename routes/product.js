@@ -57,7 +57,7 @@ router.post("/", verifyToken, async (req, res) => {
 //update product
 router.put("/:id", verifyTokenAdmin, async (req, res) => {
   try {
-    const updatedProduct = await User.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -71,13 +71,13 @@ router.put("/:id", verifyTokenAdmin, async (req, res) => {
     res.status(500).json(err);
   }
 });
-//DELETE one product
-//verifyTokenAdmin,verifyTokenAndAdmin
 
+//verifyTokenAdmin
+//delete
 router.delete("/:id", verifyTokenAdmin, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json("Product has been deleted...");
+    res.status(200).json("counted delete");
   } catch (err) {
     res.status(500).json(err);
   }
